@@ -1,0 +1,42 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+dist/
+build/
+
+# Jupyter
+.ipynb_checkpoints/
+notebooks/.ipynb_checkpoints/
+
+# Env
+.env
+*.env
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Claude Code local config (machine-specific permissions)
+.claude/
+
+# Logs (keep the dir, ignore old logs)
+logs/*.log
+
+# DuckDB WAL / temp files
+*.duckdb.wal
+*.duckdb
+
+# Data lives in Azure Blob, not git (see config/blob_io.py).
+# Local data/ is staging + one-time migration source only — never commit it.
+data/
+*.parquet
+
+# Generated reports (coverage etc.)
+reports/
