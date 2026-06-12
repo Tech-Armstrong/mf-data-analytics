@@ -1,0 +1,47 @@
+name: Daily SIF Update
+
+on:
+  schedule:
+    # TEMPORARY (testing): 3:00 PM IST = 09:30 UTC, Mon–Fri.
+    # TODO: switch to "0 18 * * 1-5" (11:30 PM IST) once verified — NAVs are
+    # published ~8–11 PM IST, so 3 PM will often have no/stale data (expected for testing).
+    - cron: "30 9 * * 1-5"
+
+  workflow_dispatch:          # allow manual trigger from GitHub UI
+    inputs:
+      force:
+        description: "Re-load today's SIF NAVs even if already on Blob"
+        type: boolean
+        required: false
+        default: false
+
+jobs:
+  update-sif-nav:
+    runs-on: ubuntu-latest
+    # No contents:write needed — data lives in Azure Blob, not git.
+
+    env:
+      AZURE_STORAGE_CONNECTION_STRING: ${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}
+
+    steps:
+      # ── Checkout ──────────────────────────────────────────────────────────
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      # ── Python ────────────────────────────────────────────────────────────
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      # ── Daily SIF update: fetch → upload raw + merge current-year partition ──
+      # Reads/writes parquet directly to the sifnavdata Azure Blob container.
+      # Also refreshes scheme_master so new SIFs are labelled automatically.
+      - name: Daily SIF update
+        run: python -m sif.scripts.fetch.daily_sif_update ${{ inputs.force && '--force' || '' }}
