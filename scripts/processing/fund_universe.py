@@ -412,6 +412,10 @@ FUND_UNIVERSE: dict[str, list[tuple[str, str, str]]] = {
     "SECTORAL PHARMA HEALTHCARE": [
         ("153602", "Baroda BNP Paribas",    "Baroda BNP Paribas Health and Wellness Fund - Regular - Growth"),
         ("143873", "ICICI Prudential",      "ICICI Prudential Pharma Healthcare and Diagnostics (P.H.D) Fund - Growth"),
+        ("145456", "DSP",                   "DSP Healthcare Fund - Regular - Growth"),
+        ("102431", "Nippon India",          "Nippon India Pharma Fund - Growth"),
+        ("102823", "SBI",                   "SBI Healthcare Opportunities Fund - Regular - Growth"),
+        ("100807", "UTI",                   "UTI Healthcare Fund - Regular - Growth"),
     ],
     "THEMATIC ESG": [
         ("154194", "Baroda BNP Paribas",    "Baroda BNP Paribas Best-in-Class Strategy Fund - Regular - Growth"),
@@ -456,6 +460,16 @@ FUND_UNIVERSE: dict[str, list[tuple[str, str, str]]] = {
     "SECTORAL BANKING FINANCIAL SERVICES": [
         ("154151", "Kotak Mahindra",        "Kotak Services Fund - Regular - Growth"),
         ("153561", "Motilal Oswal",         "Motilal Oswal Services Fund - Regular - Growth"),
+    ],
+    "SECTORAL TECHNOLOGY": [
+        ("100522", "Franklin Templeton",    "Franklin India Technology Fund - Growth"),
+        ("100363", "ICICI Prudential",      "ICICI Prudential Technology Fund - Growth"),
+        ("135797", "Tata",                  "Tata Digital India Fund - Regular - Growth"),
+        ("120577", "SBI",                   "SBI Technology Opportunities Fund - Regular - Growth"),
+        ("152966", "Motilal Oswal",         "Motilal Oswal Digital India Fund - Regular - Growth"),
+        ("152439", "Edelweiss",             "Edelweiss Technology Fund - Regular - Growth"),
+        ("103168", "Aditya Birla Sun Life", "Aditya Birla Sun Life Digital India Fund - Regular - Growth"),
+        ("152862", "Invesco",               "Invesco India Technology Fund - Regular - Growth"),
     ],
 }
 
