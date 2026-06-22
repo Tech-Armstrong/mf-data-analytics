@@ -302,6 +302,161 @@ FUND_UNIVERSE: dict[str, list[tuple[str, str, str]]] = {
         ("147490", "Union",                 "Union Focused Fund - Regular - Growth"),
         ("149090", "UTI",                   "UTI Focused Fund - Regular - Growth"),
     ],
+    "CHILDREN FUND": [
+        ("148489", "SBI",                   "SBI Children's Fund - Investment Plan - Regular Plan - Growth"),
+        ("135766", "Axis",                  "Axis Children's Fund - No Lock in - Regular Plan - Growth"),
+        ("135759", "Axis",                  "Axis Children's Fund - Lock in - Regular Growth"),
+        ("100900", "HDFC",                  "HDFC Childrens Fund - Growth"),
+        ("146409", "Aditya Birla Sun Life", "Aditya Birla Sun Life Bal Bhavishya Yojna - Regular - Growth"),
+    ],
+    "RETIREMENT FUND": [
+        ("133565", "Nippon India",          "Nippon India Retirement Fund - Wealth Creation Scheme - Growth"),
+    ],
+    "FOF OVERSEAS": [
+        ("106370", "Sundaram",              "Sundaram Global Brand Fund - Regular - Growth"),
+        ("150750", "Axis",                  "Axis NASDAQ 100 US Specific Equity Passive FOF - Regular - Growth"),
+        ("149100", "Bandhan",               "Bandhan US specific Equity Active FOF - Regular - Growth"),
+        ("149817", "DSP",                   "DSP Global Innovation Overseas Equity Omni FoF - Regular - Growth"),
+        ("117691", "DSP",                   "DSP US Specific Equity Omni FoF - Regular - Growth"),
+        ("116633", "Franklin Templeton",    "Franklin U.S. Opportunities Equity Active FOF - Growth"),
+        ("149290", "Aditya Birla Sun Life", "Aditya Birla Sun Life US Equity Passive FOF - Regular - Growth"),
+        ("148661", "Kotak Mahindra",        "Kotak US Specific Equity Passive FOF - Regular - Growth"),
+        ("149056", "Kotak Mahindra",        "Kotak Global Innovation Overseas Equity Omni FOF - Regular - Growth"),
+        ("150594", "Mirae Asset",           "Mirae Asset Global Electric & Autonomous Vehicles Equity Passive FOF - Regular - Growth"),
+    ],
+    "FOF DOMESTIC HYBRID": [
+        ("153963", "Axis",                  "Axis Multi-Asset Active FoF - Regular - Growth"),
+        ("132174", "Aditya Birla Sun Life", "Aditya Birla Sun Life Aggressive Hybrid Omni FOF - Regular - Growth"),
+        ("154165", "DSP",                   "DSP Multi Asset Omni Fund of Funds - Regular - Growth"),
+        ("153779", "Edelweiss",             "Edelweiss Multi Asset Omni Fund of Fund - Regular - Growth"),
+        ("132180", "Aditya Birla Sun Life", "Aditya Birla Sun Life Dynamic Asset Allocation Omni FOF - Regular - Growth"),
+        ("102574", "Kotak Mahindra",        "Kotak Multi Asset Omni FOF - Regular - Growth"),
+        ("148663", "Nippon India",          "Nippon India Multi-Asset Omni FoF - Regular - Growth"),
+    ],
+    "FOF DOMESTIC SILVER": [
+        ("150617", "Axis",                  "Axis Silver Fund of Fund - Regular - Growth"),
+        ("154135", "Bandhan",               "Bandhan Silver ETF FOF - Regular - Growth"),
+        ("153486", "DSP",                   "DSP Silver ETF Fund of Fund - Regular - Growth"),
+    ],
+    "FOF INCOME PLUS ARBITRAGE": [
+        ("147890", "Axis",                  "Axis Income Plus Arbitrage Active FOF - Regular - Growth"),
+        ("108545", "Bandhan",               "Bandhan Income Plus Arbitrage Active FOF - Regular - Growth"),
+        ("130533", "HDFC",                  "HDFC Income Plus Arbitrage Active FOF - Growth"),
+    ],
+    "BALANCED ADVANTAGE": [
+        ("149715", "Sundaram",              "Sundaram Balanced Advantage Fund - Growth"),
+        ("149716", "Sundaram",              "Sundaram Balanced Advantage Fund - Monthly IDCW"),
+    ],
+    "AGGRESSIVE HYBRID": [
+        ("149600", "Sundaram",              "Sundaram Aggressive Hybrid Fund - Monthly IDCW"),
+        ("140381", "Bandhan",               "Bandhan Aggressive Hybrid Fund - Regular - Growth"),
+        ("100550", "Franklin Templeton",    "Franklin India Aggressive Hybrid Fund - Growth"),
+        ("133036", "Kotak Mahindra",        "Kotak Aggressive Hybrid Fund - Regular - Growth"),
+        ("112936", "Nippon India",          "Nippon India Aggressive Hybrid Fund - Growth"),
+    ],
+    "THEMATIC CONSUMPTION": [
+        ("102142", "Sundaram",              "Sundaram Consumption Fund - Regular - Growth"),
+        ("154022", "Union",                 "Union Consumption Fund - Regular - Growth"),
+        ("112152", "Canara Robeco",         "Canara Robeco Consumption Fund - Regular - Growth"),
+        ("103111", "Aditya Birla Sun Life", "Aditya Birla Sun Life Consumption Fund - Growth"),
+    ],
+    "SECTORAL INFRASTRUCTURE": [
+        ("129213", "Sundaram",              "Sundaram Infrastructure Advantage Fund - Regular - Growth"),
+        ("102434", "DSP",                   "DSP India T.I.G.E.R. Fund - Regular - Growth"),
+        ("153482", "Motilal Oswal",         "Motilal Oswal Infrastructure Fund - Regular - Growth"),
+    ],
+    "ULTRA SHORT DURATION": [
+        ("149535", "Sundaram",              "Sundaram Ultra Short Duration Fund - Growth"),
+        ("144171", "Bandhan",               "Bandhan Ultra Short Duration Fund - Regular - Growth"),
+    ],
+    "LOW DURATION": [
+        ("149519", "Sundaram",              "Sundaram Low Duration Fund - Growth"),
+        ("153652", "Union",                 "Union Low Duration Fund - Regular - Growth"),
+        ("153419", "Edelweiss",             "Edelweiss Low Duration Fund - Regular - Growth"),
+    ],
+    "SHORT DURATION": [
+        ("149585", "Sundaram",              "Sundaram Short Duration Fund - Growth"),
+        ("108768", "Bandhan",               "Bandhan Short Duration Fund - Regular - Growth"),
+    ],
+    "LIQUID": [
+        ("149661", "Sundaram",              "Sundaram Liquid Fund - Growth"),
+        ("102012", "UTI",                   "UTI Liquid Cash Plan - Regular - Growth"),
+    ],
+    "INDEX FUND": [
+        ("154198", "UTI",                   "UTI Nifty500 Shariah Index Fund - Regular - Growth"),
+        ("153273", "UTI",                   "UTI Nifty Midsmallcap 400 Momentum Quality 100 Index Fund - Regular - Growth"),
+        ("154170", "Axis",                  "Axis BSE India Sectors Leaders Index Fund - Regular - Growth"),
+        ("153245", "Axis",                  "Axis Nifty500 Momentum 50 Index Fund - Regular - Growth"),
+        ("152779", "HDFC",                  "HDFC NIFTY500 Multicap 50:25:25 Index Fund - Regular - Growth"),
+        ("150519", "Motilal Oswal",         "Motilal Oswal BSE Enhanced Value Index Fund - Regular - Growth"),
+    ],
+    "ELSS": [
+        ("101834", "UTI",                   "UTI Master Equity Plan Unit Scheme"),
+    ],
+    "THEMATIC OTHERS": [
+        ("153721", "Bandhan",               "Bandhan Multi-Factor Fund - Regular - Growth"),
+        ("153459", "ICICI Prudential",      "ICICI Prudential Quality Fund - Growth"),
+        ("153181", "ICICI Prudential",      "ICICI Prudential Rural Opportunities Fund - Growth"),
+        ("153865", "ICICI Prudential",      "ICICI Prudential Conglomerate Fund - Growth"),
+        ("153969", "Kotak Mahindra",        "Kotak Rural Opportunities Fund - Regular - Growth"),
+    ],
+    "MONEY MARKET": [
+        ("108756", "Bandhan",               "Bandhan Money Market Fund - Regular - Growth"),
+    ],
+    "CORPORATE BOND": [
+        ("135914", "Bandhan",               "Bandhan Corporate Bond Fund - Regular - Growth"),
+    ],
+    "THEMATIC ENERGY": [
+        ("153226", "Baroda BNP Paribas",    "Baroda BNP Paribas Energy Opportunities Fund - Regular - Growth"),
+    ],
+    "SECTORAL PHARMA HEALTHCARE": [
+        ("153602", "Baroda BNP Paribas",    "Baroda BNP Paribas Health and Wellness Fund - Regular - Growth"),
+        ("143873", "ICICI Prudential",      "ICICI Prudential Pharma Healthcare and Diagnostics (P.H.D) Fund - Growth"),
+    ],
+    "THEMATIC ESG": [
+        ("154194", "Baroda BNP Paribas",    "Baroda BNP Paribas Best-in-Class Strategy Fund - Regular - Growth"),
+    ],
+    "MULTI ASSET ALLOCATION": [
+        ("153466", "Canara Robeco",         "Canara Robeco Multi Asset Allocation Fund - Regular - Growth"),
+        ("153772", "360 ONE",               "360 ONE Multi Asset Allocation Fund - Regular - Growth"),
+        ("103131", "HDFC",                  "HDFC Multi-Asset Fund - Growth"),
+    ],
+    "DIVIDEND YIELD": [
+        ("103678", "Franklin Templeton",    "Franklin India Dividend Yield Fund - Growth"),
+    ],
+    "ARBITRAGE": [
+        ("106793", "HDFC",                  "HDFC Arbitrage Fund - Regular - Growth"),
+        ("105968", "Kotak Mahindra",        "Kotak Arbitrage Fund - Regular - Growth"),
+    ],
+    "FOF DOMESTIC EQUITY": [
+        ("153861", "HDFC",                  "HDFC Diversified Equity All Cap Active FOF - Regular - Growth"),
+        ("102135", "ICICI Prudential",      "ICICI Prudential Aggressive Hybrid Active FOF - Growth"),
+        ("143904", "ICICI Prudential",      "ICICI Prudential Bharat 22 FOF - Growth"),
+    ],
+    "FOF DOMESTIC GOLD": [
+        ("115833", "ICICI Prudential",      "ICICI Prudential Gold ETF FOF - Growth"),
+    ],
+    "FOF DOMESTIC DEBT": [
+        ("102141", "ICICI Prudential",      "ICICI Prudential Diversified Debt Strategy Active FOF - Growth"),
+    ],
+    "FOF DOMESTIC GOLD AND SILVER": [
+        ("153922", "Kotak Mahindra",        "Kotak Gold Silver Passive FOF - Regular - Growth"),
+        ("153814", "Mirae Asset",           "Mirae Asset Gold Silver Passive FoF - Regular - Growth"),
+        ("150641", "Motilal Oswal",         "Motilal Oswal Gold and Silver Passive Fund of Funds - Regular - Growth"),
+    ],
+    "CONTRA": [
+        ("103040", "Kotak Mahindra",        "Kotak Contra Fund - Regular - Growth"),
+    ],
+    "MEDIUM DURATION": [
+        ("130037", "Nippon India",          "Nippon India Medium Duration Fund - Growth"),
+    ],
+    "THEMATIC BUSINESS CYCLE": [
+        ("153288", "Invesco",               "Invesco India Business Cycle Fund - Regular - Growth"),
+    ],
+    "SECTORAL BANKING FINANCIAL SERVICES": [
+        ("154151", "Kotak Mahindra",        "Kotak Services Fund - Regular - Growth"),
+        ("153561", "Motilal Oswal",         "Motilal Oswal Services Fund - Regular - Growth"),
+    ],
 }
 
 
