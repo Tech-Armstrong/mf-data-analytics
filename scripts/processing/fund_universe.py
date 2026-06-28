@@ -429,8 +429,16 @@ FUND_UNIVERSE: dict[str, list[tuple[str, str, str]]] = {
         ("103678", "Franklin Templeton",    "Franklin India Dividend Yield Fund - Growth"),
     ],
     "ARBITRAGE": [
+        ("130771", "Axis",                  "Axis Arbitrage Fund - Regular Plan - Growth"),
+        ("130205", "Edelweiss",             "Edelweiss Arbitrage Fund - Regular Plan - Growth Option"),
+        ("141605", "Edelweiss",             "Edelweiss Arbitrage Fund - Monthly Regular Plan - IDCW Option"),
         ("106793", "HDFC",                  "HDFC Arbitrage Fund - Regular - Growth"),
+        ("105603", "Invesco",               "Invesco India Arbitrage Fund - Regular Plan - Growth Option"),
         ("105968", "Kotak Mahindra",        "Kotak Arbitrage Fund - Regular - Growth"),
+        ("148400", "Mirae Asset",           "Mirae Asset Arbitrage Fund Regular Growth"),
+        ("104457", "SBI",                   "SBI Arbitrage Opportunities Fund - Regular Plan - Growth"),
+        ("145723", "Tata",                  "Tata Arbitrage Fund - Regular Plan - Growth"),
+        ("104075", "UTI",                   "UTI Arbitrage Fund - Regular Plan - Growth Option"),
     ],
     "FOF DOMESTIC EQUITY": [
         ("153861", "HDFC",                  "HDFC Diversified Equity All Cap Active FOF - Regular - Growth"),
