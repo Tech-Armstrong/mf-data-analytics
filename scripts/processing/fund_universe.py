@@ -14,7 +14,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
 import polars as pl
 
-from config.constants import RAW_NAV_DIR
+from config.constants import RAW_NAV_DIR, amc_code
 from config.logging_utils import get_logger
 
 log = get_logger("test_processing")
@@ -644,7 +644,35 @@ def print_report(df: pl.DataFrame) -> None:
 
 # ── Main ──────────────────────────────────────────────────────────────────────
 
+def check_amc_codes() -> int:
+    """
+    Assert every fund_house label resolves to an AMFI `mf=` id.
+
+    Run this after adding funds: an unresolved label means backfilling that AMC
+    would need a hand-guessed mf= id, which is how the wrong AMC's history gets
+    fetched. Returns the number of unresolved labels (0 = healthy).
+    """
+    houses = sorted({h for funds in FUND_UNIVERSE.values() for _, h, _ in funds})
+    unresolved: list[tuple[str, str]] = []
+    for house in houses:
+        try:
+            amc_code(house)
+        except KeyError as exc:
+            unresolved.append((house, str(exc)))
+
+    log.info("fund_house labels: %d  |  resolved: %d  |  unresolved: %d",
+             len(houses), len(houses) - len(unresolved), len(unresolved))
+    for house, err in unresolved:
+        log.error("  %s -> %s", house, err)
+    if unresolved:
+        log.error("Add the verified id to AMFI_AMC_CODES (or an entry to "
+                  "AMC_NAME_ALIASES) in config/constants.py.")
+    return len(unresolved)
+
+
 def main() -> None:
+    if "--check-amc-codes" in sys.argv:
+        sys.exit(1 if check_amc_codes() else 0)
     log.info("Loading raw NAV data from: %s", RAW_NAV_DIR)
     df = load_all_raw_parquets()
     print_report(df)

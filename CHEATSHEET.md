@@ -53,6 +53,35 @@ python -m sif.scripts.fetch.fetch_sif_history --pause 3 --chunk-days 90
 
 ---
 
+## AMC `mf=` codes
+
+`config/constants.py` holds `AMFI_AMC_CODES` — every AMFI AMC id (verified
+2026-07-31 by probing the history endpoint), plus `amc_code()` to look one up
+from a `fund_house` label. Use it instead of hand-guessing `--mf`:
+
+```python
+from config.constants import amc_code
+amc_code("HDFC")             # 9
+amc_code("WhiteOak Capital") # 71
+amc_code("quant")            # 13  (NOT Quantum, which is 41)
+```
+
+After adding funds, confirm every `fund_house` still resolves:
+
+```powershell
+python -m scripts.processing.fund_universe --check-amc-codes   # exit 1 if any unresolved
+```
+
+An unresolved label means a new AMC: probe `AMFI_HISTORY_URL` with candidate
+`mf=` ids, read back the AMC name, and add the verified id to `AMFI_AMC_CODES`
+(or a spelling variant to `AMC_NAME_ALIASES`).
+
+> Gotchas: merged/renamed AMCs keep the **surviving** entity's id — Baroda BNP
+> Paribas = 4 (not 59), Nippon India = 21 (ex-Reliance). `quant` (13) and
+> `Quantum` (41) are different AMCs. `360 ONE` = 62 (ex-IIFL).
+
+---
+
 ## scheme_master (the label table)
 
 ```powershell
