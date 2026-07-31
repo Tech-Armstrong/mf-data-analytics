@@ -472,6 +472,22 @@ FUND_UNIVERSE: dict[str, list[tuple[str, str, str]]] = {
         ("102431", "Nippon India",          "Nippon India Pharma Fund - Growth"),
         ("102823", "SBI",                   "SBI Healthcare Opportunities Fund - Regular - Growth"),
         ("100807", "UTI",                   "UTI Healthcare Fund - Regular - Growth"),
+        ("147407", "Aditya Birla Sun Life", "Aditya Birla Sun Life Pharma and Healthcare Fund - Regular - Growth"),
+        ("153155", "Bajaj Finserv",         "Bajaj Finserv Healthcare Fund - Regular - Growth"),
+        ("153974", "Bandhan",               "Bandhan Healthcare Fund - Regular - Growth"),
+        ("152084", "HDFC",                  "HDFC Pharma and Healthcare Fund - Growth"),
+        ("149270", "ITI",                   "ITI Pharma and Healthcare Fund - Regular - Growth"),
+        ("152216", "Kotak Mahindra",        "Kotak Healthcare Fund - Regular - Growth"),
+        ("152025", "LIC",                   "LIC MF Healthcare Fund - Regular - Growth"),
+        ("143785", "Mirae Asset",           "Mirae Asset Healthcare Fund - Regular - Growth"),
+        ("153040", "PGIM India",            "PGIM India Healthcare Fund - Regular - Growth"),
+        ("151855", "quant",                 "quant Healthcare Fund - Growth - Regular"),
+        # Tata India Pharma & Healthcare (135812, mf=25) deferred 2026-07-31:
+        # AMFI's history endpoint serves its data only through 2026-07-24 and
+        # returns nothing for 25-30 Jul (verified at 365/180/60/6-day chunk
+        # sizes). Add it once AMFI serves that window -- the daily job cannot
+        # backfill the gap, it only ever appends the current day.
+        ("152348", "WhiteOak Capital",      "WhiteOak Capital Pharma and Healthcare Fund Regular Growth"),
     ],
     "THEMATIC ESG": [
         ("154194", "Baroda BNP Paribas",    "Baroda BNP Paribas Best-in-Class Strategy Fund - Regular - Growth"),
