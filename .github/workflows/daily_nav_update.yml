@@ -40,6 +40,16 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
+      # ── Scheme master: regenerate from FUND_UNIVERSE ──────────────────────
+      # Cheap and deterministic (no API calls) — it just serialises the
+      # committed FUND_UNIVERSE to Blob. Runs before the NAV update so a fund
+      # added to the universe is always present in scheme_master by the time
+      # its NAVs land. Previously manual, which let the two drift apart:
+      # a newly added fund had NAV history but no master row, so any query
+      # joining the two silently dropped it.
+      - name: Rebuild scheme master
+        run: python -m scripts.processing.build_scheme_master
+
       # ── Daily NAV update: fetch → upload raw + merge current-year partition ──
       # Reads/writes parquet directly to Azure Blob. No git commit, no .duckdb.
       - name: Daily NAV update
