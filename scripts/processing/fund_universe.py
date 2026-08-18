@@ -376,6 +376,7 @@ FUND_UNIVERSE: dict[str, list[tuple[str, str, str]]] = {
         ("100550", "Franklin Templeton",    "Franklin India Aggressive Hybrid Fund - Growth"),
         ("133036", "Kotak Mahindra",        "Kotak Aggressive Hybrid Fund - Regular - Growth"),
         ("112936", "Nippon India",          "Nippon India Aggressive Hybrid Fund - Growth"),
+        ("100356", "ICICI Prudential",      "ICICI Prudential Equity & Debt Fund - Growth"),
     ],
     "THEMATIC CONSUMPTION": [
         ("102142", "Sundaram",              "Sundaram Consumption Fund - Regular - Growth"),
