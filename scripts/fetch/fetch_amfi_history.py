@@ -135,14 +135,24 @@ def _parse_amfi_text(text: str) -> list[dict]:
     """
     AMFI bulk NAV response is a plain-text, semicolon-delimited file.
 
-    Header block (repeated per scheme):
-        Scheme Code;ISIN Div Payout/IDCW;ISIN Div Reinvestment;Scheme Name;
-        Net Asset Value;Repurchase Price;Sale Price;Date
+    AMFI's history endpoint returns 8 semicolon-delimited columns:
+        Scheme Code;Scheme Name;Plan;Option;
+        ISIN Div Payout/ISIN Growth;ISIN Div Reinvestment;Net Asset Value;Date
 
     We only care about: Scheme Code, Net Asset Value, Date.
     Lines with non-numeric scheme codes (e.g. fund-house headers) are skipped.
+
+    NOTE: this layout splits Plan and Option into their own columns, which
+    pushes NAV to index 6. An earlier layout put NAV at index 4; reading that
+    index now yields an ISIN, float() raises, and every row is silently
+    dropped -- a backfill that "succeeds" with zero rows. Both indices are
+    resolved by name off the header line below rather than hardcoded, so a
+    further reshuffle fails loudly instead of silently.
     """
     rows: list[dict] = []
+    # Defaults match AMFI's current 8-column layout; the header line below
+    # overrides them if present.
+    nav_idx, date_idx = 6, 7
     for line in text.splitlines():
         line = line.strip()
         if not line:
@@ -150,9 +160,24 @@ def _parse_amfi_text(text: str) -> list[dict]:
         parts = line.split(";")
         if len(parts) < 8:
             continue
+
+        # Header line: locate NAV and Date by name so a column reshuffle is
+        # detected rather than silently mis-parsed.
+        if parts[0].strip() == "Scheme Code":
+            labels = [c.strip().lower() for c in parts]
+            try:
+                nav_idx = labels.index("net asset value")
+                date_idx = labels.index("date")
+            except ValueError:
+                raise RuntimeError(
+                    "AMFI history header lacks 'Net Asset Value'/'Date' "
+                    f"columns; got {parts!r}. The response format changed."
+                )
+            continue
+
         scheme_code_raw = parts[0].strip()
-        nav_raw         = parts[4].strip()
-        date_raw        = parts[7].strip()
+        nav_raw         = parts[nav_idx].strip()
+        date_raw        = parts[date_idx].strip()
 
         # Skip header/fund-house label lines
         if not scheme_code_raw.isdigit():
