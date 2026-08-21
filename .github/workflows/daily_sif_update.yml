@@ -2,10 +2,15 @@ name: Daily SIF Update
 
 on:
   schedule:
-    # TEMPORARY (testing): 3:00 PM IST = 09:30 UTC, Mon–Fri.
-    # TODO: switch to "0 18 * * 1-5" (11:30 PM IST) once verified — NAVs are
-    # published ~8–11 PM IST, so 3 PM will often have no/stale data (expected for testing).
-    - cron: "30 9 * * 1-5"
+    # 11:30 PM IST = 18:00 UTC, Mon–Fri. AMFI publishes NAVs ~8–11 PM IST, so
+    # this is the first slot where the day's data is reliably complete.
+    #
+    # Was "30 9 * * 1-5" (3 PM IST) during testing, which ran before publication
+    # and so routinely fetched nothing. That silently loses days: NAVAll.txt only
+    # ever carries the latest date, so a missed run cannot be recovered by the
+    # next one -- it needs a backfill from the history endpoint. Two days
+    # (19-20 Aug 2026) were lost this way before the schedule was corrected.
+    - cron: "0 18 * * 1-5"
 
   workflow_dispatch:          # allow manual trigger from GitHub UI
     inputs:
