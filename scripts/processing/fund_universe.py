@@ -555,6 +555,20 @@ FUND_UNIVERSE: dict[str, list[tuple[str, str, str]]] = {
     "CORPORATE BOND": [
         ("135914", "Bandhan",               "Bandhan Corporate Bond Fund - Regular - Growth"),
     ],
+    "THEMATIC INNOVATION": [
+        ("148631", "Axis",                  "Axis Innovation Fund - Regular - Growth"),
+        ("152606", "Bandhan",               "Bandhan Innovation Fund - Regular - Growth"),
+        ("152472", "Baroda BNP Paribas",    "Baroda BNP Paribas Innovation Fund - Regular - Growth"),
+        ("153619", "HDFC",                  "HDFC Innovation Fund - Regular - Growth"),
+        ("151579", "ICICI Prudential",      "ICICI Prudential Innovation Fund - Growth"),
+        ("154120", "Mahindra Manulife",     "Mahindra Manulife Innovation Opportunities Fund - Regular - Growth"),
+        ("153256", "Motilal Oswal",         "Motilal Oswal Innovation Opportunities Fund - Regular - Growth"),
+        ("152034", "Nippon India",          "Nippon India Innovation Fund - Growth"),
+        ("152774", "SBI",                   "SBI Innovative Opportunities Fund - Regular - Growth"),
+        ("153059", "Tata",                  "Tata India Innovation Fund - Regular - Growth"),
+        ("151903", "Union",                 "Union Innovation & Opportunities Fund - Regular - Growth"),
+        ("152086", "UTI",                   "UTI Innovation Fund - Regular - Growth"),
+    ],
     "THEMATIC ENERGY": [
         ("153226", "Baroda BNP Paribas",    "Baroda BNP Paribas Energy Opportunities Fund - Regular - Growth"),
         ("108202", "DSP",                   "DSP Natural Resources And New Energy Fund - Regular - Growth"),
@@ -661,7 +675,10 @@ FUND_UNIVERSE: dict[str, list[tuple[str, str, str]]] = {
         ("150641", "Motilal Oswal",         "Motilal Oswal Gold and Silver Passive Fund of Funds - Regular - Growth"),
     ],
     "CONTRA": [
+        ("105460", "Invesco",               "Invesco India Contra Fund - Regular - Growth"),
         ("103040", "Kotak Mahindra",        "Kotak Contra Fund - Regular - Growth"),
+        ("154338", "Motilal Oswal",         "Motilal Oswal Contra Fund - Regular - Growth"),
+        ("102414", "SBI",                   "SBI Contra Fund - Regular - Growth"),
     ],
     "MEDIUM DURATION": [
         ("130037", "Nippon India",          "Nippon India Medium Duration Fund - Growth"),
