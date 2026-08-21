@@ -557,6 +557,12 @@ FUND_UNIVERSE: dict[str, list[tuple[str, str, str]]] = {
     ],
     "THEMATIC ENERGY": [
         ("153226", "Baroda BNP Paribas",    "Baroda BNP Paribas Energy Opportunities Fund - Regular - Growth"),
+        ("108202", "DSP",                   "DSP Natural Resources And New Energy Fund - Regular - Growth"),
+        ("152726", "ICICI Prudential",      "ICICI Prudential Energy Opportunities Fund - Growth"),
+        ("153449", "Kotak Mahindra",        "Kotak Energy Opportunities Fund - Regular - Growth"),
+        ("101262", "Nippon India",          "Nippon India Power & Infra Fund - Growth"),
+        ("152418", "SBI",                   "SBI Energy Opportunities Fund - Regular - Growth"),
+        ("135815", "Tata",                  "Tata Resources & Energy Fund - Regular - Growth"),
     ],
     "SECTORAL PHARMA HEALTHCARE": [
         ("153602", "Baroda BNP Paribas",    "Baroda BNP Paribas Health and Wellness Fund - Regular - Growth"),
