@@ -77,12 +77,22 @@ def fetch_nav_text() -> str:
 
 def parse_nav_text(text: str) -> pl.DataFrame:
     """
-    NAVAll.txt format (semicolon delimited, 6 columns):
-        scheme_code ; isin1 ; isin2 ; scheme_name ; nav ; date
+    NAVAll.txt is semicolon delimited with a header line naming the columns:
+        Scheme Code;ISIN Div Payout/ISIN Growth;ISIN Div Reinvestment;
+        Scheme Name;Plan;Option;Net Asset Value;Date
 
     Returns DataFrame filtered to UNIVERSE_CODES only.
+
+    NOTE: Plan and Option are their own columns, which puts NAV at index 6 and
+    Date at index 7. An earlier layout had them at 4 and 5; reading those now
+    yields "Regular Plan"/"Growth", float() raises, and the except below drops
+    every row -- the job then logs "no data parsed" and exits 0, looking like a
+    successful no-op. That silently lost 21-Aug-2026. Both indices are resolved
+    by name off the header so a further reshuffle fails loudly instead.
     """
     rows = []
+    # Defaults match AMFI's current 8-column layout; the header line overrides.
+    nav_idx, date_idx = 6, 7
     for line in text.splitlines():
         line = line.strip()
         if not line:
@@ -91,13 +101,26 @@ def parse_nav_text(text: str) -> pl.DataFrame:
         if len(parts) < 6:
             continue
         code = parts[0].strip()
+
+        if code == "Scheme Code":
+            labels = [c.strip().lower() for c in parts]
+            try:
+                nav_idx  = labels.index("net asset value")
+                date_idx = labels.index("date")
+            except ValueError:
+                raise RuntimeError(
+                    "NAVAll.txt header lacks 'Net Asset Value'/'Date' columns; "
+                    f"got {parts!r}. The response format changed."
+                )
+            continue
+
         if not code.isdigit():
             continue
         if code not in UNIVERSE_CODES:
             continue
         try:
-            nav_val  = float(parts[4].strip())
-            nav_date = datetime.strptime(parts[5].strip(), "%d-%b-%Y").date()
+            nav_val  = float(parts[nav_idx].strip())
+            nav_date = datetime.strptime(parts[date_idx].strip(), "%d-%b-%Y").date()
         except (ValueError, IndexError):
             continue
         rows.append({
@@ -194,22 +217,33 @@ def main(force: bool = False) -> None:
              len(UNIVERSE_CODES), len(FUND_UNIVERSE))
     log.info("-------------------------------------------")
 
-    # Check if already done for today
-    if not force and already_loaded(today):
-        log.info("Today's NAV (%s) already on Blob. Nothing to do. Use --force to reload.", today)
-        return
-
-    # Fetch
+    # Fetch first, then decide: the guard must test the date AMFI actually
+    # published, not today's. AMFI publishes in the evening and a run can fire
+    # before that, or on a day after a holiday -- guarding on `today` would skip
+    # a still-unloaded prior session, and that day is then unrecoverable here
+    # because NAVAll.txt only ever carries the latest date.
     text = fetch_nav_text()
 
     # Parse + filter to universe
     df = parse_nav_text(text)
 
     if df.is_empty():
-        log.warning("No data parsed for our universe. AMFI may not have published yet.")
+        log.error(
+            "No rows parsed for our universe from a %d-byte response. Either "
+            "AMFI has not published, or the file layout changed -- check the "
+            "header handling in parse_nav_text before assuming the former.",
+            len(text),
+        )
         return
 
-    nav_date   = df["nav_date"][0]
+    # The file's own latest date, which is what we are about to load.
+    feed_date = df["nav_date"].max()
+    if not force and already_loaded(feed_date):
+        log.info("NAV for %s already on Blob. Nothing to do. Use --force to reload.",
+                 feed_date)
+        return
+
+    nav_date   = feed_date
     found      = df["scheme_code"].n_unique()
     missing    = len(UNIVERSE_CODES) - found
 

@@ -75,6 +75,14 @@ def parse_sif_lines(
 
     Rows whose NAV/date cannot be parsed are skipped. category/fund_house may be
     None for rows that appear before any header (defensive — not expected).
+
+    The caller's indices are treated as a fallback only. When the feed carries a
+    "Scheme Code;...;Net Asset Value;Date" title row, the columns are located by
+    NAME and the caller's values are overridden. AMFI reshuffles these files --
+    splitting Plan and Option into their own columns moved NAV from 4 to 6 --
+    and with hardcoded indices that reads a plan label as a float, so every row
+    is skipped by the except below and the caller sees an empty feed rather than
+    an error.
     """
     rows: list[dict] = []
     category: str | None = None
@@ -86,6 +94,31 @@ def parse_sif_lines(
             continue
 
         parts = [p.strip() for p in line.split(";")]
+
+        # Column-title row: locate NAV/Date/Name by name so a layout change is
+        # picked up instead of silently zeroing the parse.
+        if parts[0] == "Scheme Code":
+            labels = [c.lower() for c in parts]
+            try:
+                nav_idx  = labels.index("net asset value")
+                date_idx = labels.index("date")
+            except ValueError:
+                raise RuntimeError(
+                    "SIF feed header lacks 'Net Asset Value'/'Date'; got "
+                    f"{parts!r}. The response format changed."
+                )
+            # The two feeds title the name column differently: the daily file
+            # says "Scheme Name", the history file "NAV Name".
+            for label in ("scheme name", "nav name"):
+                if label in labels:
+                    name_idx = labels.index(label)
+                    break
+            else:
+                raise RuntimeError(
+                    "SIF feed header has no scheme-name column; got "
+                    f"{parts!r}. The response format changed."
+                )
+            continue
 
         if _looks_like_data_row(parts[0]):
             try:
