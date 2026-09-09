@@ -22,6 +22,16 @@ over `az://`. No materialised database file.
   ([sif/scripts/sif_parse.py](scripts/sif_parse.py)). `scheme_master` is rebuilt
   from the feed on every fetch, so a new SIF scheme is ingested and labelled the
   same day with no code or manual step.
+- **fund_house is brand-mapped, not raw:** AMFI's AMC sub-header is a SIF
+  *brand* name (e.g. "Apex SIF"), not the registered AMC ("Aditya Birla Sun
+  Life Mutual Fund"). [sif/config/amc_map.py](config/amc_map.py) is a curated
+  brand → canonical-AMC-name lookup, applied in
+  `build_sif_scheme_master.build_from_labelled_rows()` before publishing.
+  A brand not yet in the map is still labelled (with AMFI's raw string, so
+  nothing is dropped) but logged as `UNMAPPED`; add it to `AMC_NAME_MAP` and
+  the next run self-heals every scheme under that brand — no backfill script
+  needed. Audit anytime with
+  `python -m sif.scripts.check_sif_funds --amc-check`.
 
 ## Layout
 

@@ -44,10 +44,22 @@ def _looks_like_data_row(first_field: str) -> bool:
     return first_field.upper().startswith("SIF-")
 
 
+# AMFI prefixes section headers with the scheme structure, not just "Open Ended
+# Schemes" -- an Interval Fund structured SIF (e.g. Active Asset Allocator,
+# Hybrid Long-Short) gets "Interval Fund Schemes(...)" instead. Both carry the
+# same "<Strategies> - <category>)" shape inside the parentheses, so both are
+# recognised as section headers; a header type AMFI adds later that doesn't
+# start with one of these prefixes will still be missed (see module docstring
+# risk note) -- if scheme_master categories start looking stale/collapsed
+# again, check here first for a new prefix.
+_SECTION_HEADER_PREFIXES = ("Open Ended Schemes", "Interval Fund Schemes")
+
+
 def _looks_like_section_header(line: str) -> bool:
     # Section headers describe the strategy and always carry parentheses, e.g.
-    # "Open Ended Schemes(Equity Oriented Investment Strategies - ... Fund)".
-    return line.startswith("Open Ended Schemes") and "(" in line and ")" in line
+    # "Open Ended Schemes(Equity Oriented Investment Strategies - ... Fund)" or
+    # "Interval Fund Schemes(Hybrid Investment Strategies - ... Fund)".
+    return line.startswith(_SECTION_HEADER_PREFIXES) and "(" in line and ")" in line
 
 
 def _extract_category(section_header: str) -> str:
