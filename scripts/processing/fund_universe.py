@@ -41,6 +41,7 @@ FUND_UNIVERSE: dict[str, list[tuple[str, str, str]]] = {
         ("108466", "ICICI Prudential",      "ICICI Pru Large Cap Fund - Growth"),
         ("112098", "Invesco",               "Invesco India Largecap Fund - Regular - Growth"),
         ("148351", "ITI",                   "ITI Large Cap Fund - Regular - Growth"),
+        ("154632", "Jio BlackRock",         "JioBlackRock Large Cap Fund - Regular Plan - Growth Option"),
         ("100219", "JM Financial",          "JM Large Cap Fund (Regular) - Growth"),
         ("114458", "Kotak Mahindra",        "Kotak Large Cap Fund - Growth"),
         ("106871", "LIC",                   "LIC MF Large Cap Fund-Regular-Growth"),
@@ -187,6 +188,7 @@ FUND_UNIVERSE: dict[str, list[tuple[str, str, str]]] = {
         ("148989", "ICICI Prudential",      "ICICI Pru Flexicap Fund - Growth"),
         ("149766", "Invesco",               "Invesco India Flexi Cap Fund - Regular - Growth"),
         ("151377", "ITI",                   "ITI Flexi Cap Fund - Regular - Growth"),
+        ("154641", "Jio BlackRock",         "JioBlackRock Flexi Cap Fund - Regular Plan - Growth Option"),
         ("109522", "JM Financial",          "JM Flexicap Fund (Regular) - Growth"),
         ("112090", "Kotak Mahindra",        "Kotak Flexicap Fund - Growth"),
         ("100313", "LIC",                   "LIC MF Flexi Cap Fund-Regular-Growth"),
@@ -214,6 +216,7 @@ FUND_UNIVERSE: dict[str, list[tuple[str, str, str]]] = {
         ("150347", "WhiteOak Capital",      "WhiteOak Capital Flexi Cap Fund Regular-Growth"),
     ],
     "LARGE & MID CAP": [
+        ("154478", "Abakkus",               "Abakkus Large & Mid Cap Fund - Regular Plan - Growth"),
         ("100033", "Aditya Birla Sun Life", "ABSL Large & Mid Cap Fund - Regular Growth"),
         ("145112", "Axis",                  "Axis Large & Mid Cap Fund - Regular - Growth"),
         ("152406", "Bajaj Finserv",         "Bajaj Finserv Large and Mid Cap Fund - Regular - Growth"),
@@ -688,6 +691,15 @@ FUND_UNIVERSE: dict[str, list[tuple[str, str, str]]] = {
     ],
     "THEMATIC ESG": [
         ("154194", "Baroda BNP Paribas",    "Baroda BNP Paribas Best-in-Class Strategy Fund - Regular - Growth"),
+    ],
+    "THEMATIC MNC": [
+        ("100064", "Aditya Birla Sun Life", "ABSL MNC Fund - Regular Plan - Growth"),
+        ("151457", "HDFC",                  "HDFC MNC Fund - Regular Plan - Growth"),
+        ("147345", "ICICI Prudential",      "ICICI Prudential MNC Fund - Regular Plan - Growth"),
+        ("152913", "Kotak Mahindra",        "Kotak MNC Fund - Regular Plan - Growth"),
+        ("153691", "Nippon India",          "Nippon India MNC Fund - Regular Plan - Growth"),
+        ("103034", "SBI",                   "SBI MNC Fund - Regular Plan - Growth"),
+        ("100740", "UTI",                   "UTI - MNC Fund - Regular Plan - Growth"),
     ],
     "MULTI ASSET ALLOCATION": [
         ("153772", "360 ONE",              "360 ONE Multi Asset Allocation Fund - Regular - Growth"),
