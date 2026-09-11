@@ -304,10 +304,18 @@ FUND_UNIVERSE: dict[str, list[tuple[str, str, str]]] = {
     ],
     "CHILDREN FUND": [
         ("148489", "SBI",                   "SBI Children's Fund - Investment Plan - Regular Plan - Growth"),
+        ("101169", "SBI",                   "SBI Children's Fund - Savings Plan - Regular Plan - Growth"),
         ("135766", "Axis",                  "Axis Children's Fund - No Lock in - Regular Plan - Growth"),
         ("135759", "Axis",                  "Axis Children's Fund - Lock in - Regular Growth"),
         ("100900", "HDFC",                  "HDFC Childrens Fund - Growth"),
         ("146409", "Aditya Birla Sun Life", "Aditya Birla Sun Life Bal Bhavishya Yojna - Regular - Growth"),
+        ("153170", "Baroda BNP Paribas",    "Baroda BNP Paribas Children's Fund - Regular Plan - Growth"),
+        ("101127", "ICICI Prudential",      "ICICI Prudential Children's Fund - Regular Plan - Growth"),
+        ("101271", "LIC",                   "LIC MF Children's Fund - Regular Plan - Growth"),
+        ("101491", "Tata",                  "Tata Childrens Fund - Regular Plan - Growth"),
+        ("102267", "UTI",                   "UTI Children's Equity Fund - Regular Plan - Growth"),
+        ("100678", "UTI",                   "UTI Children's Hybrid Fund - Regular Plan - Growth"),
+        ("152217", "Union",                 "Union Children's Fund - Regular Plan - Growth"),
     ],
     "RETIREMENT FUND": [
         ("133565", "Nippon India",          "Nippon India Retirement Fund - Wealth Creation Scheme - Growth"),
