@@ -729,6 +729,17 @@ FUND_UNIVERSE: dict[str, list[tuple[str, str, str]]] = {
     ],
     "DIVIDEND YIELD": [
         ("103678", "Franklin Templeton",    "Franklin India Dividend Yield Fund - Growth"),
+        ("101738", "Aditya Birla Sun Life", "Aditya Birla Sun Life Dividend Yield Fund - Regular Plan - Growth"),
+        ("152807", "Baroda BNP Paribas",    "Baroda BNP Paribas Dividend Yield Fund - Regular Plan - Growth"),
+        ("148610", "HDFC",                  "HDFC Dividend Yield Fund - Regular Plan - Growth"),
+        ("129310", "ICICI Prudential",      "ICICI Prudential Dividend Yield Fund - Regular Plan - Growth"),
+        ("154099", "Kotak Mahindra",        "Kotak Dividend Yield Fund - Regular Plan - Growth"),
+        ("152019", "LIC",                   "LIC MF Dividend Yield Fund - Regular Plan - Growth"),
+        ("151476", "SBI",                   "SBI Dividend Yield Fund - Regular Plan - Growth"),
+        ("149697", "Sundaram",              "Sundaram Dividend Yield Fund - Regular Plan - Growth"),
+        ("148948", "Tata",                  "Tata Dividend Yield Fund - Regular Plan - Growth"),
+        ("103026", "UTI",                   "UTI Dividend Yield Fund - Regular Plan - Growth"),
+        ("154553", "WhiteOak Capital",      "WhiteOak Capital Dividend Yield Fund - Regular Plan - Growth"),
     ],
     "ARBITRAGE": [
         ("130771", "Axis",                  "Axis Arbitrage Fund - Regular Plan - Growth"),
@@ -763,6 +774,7 @@ FUND_UNIVERSE: dict[str, list[tuple[str, str, str]]] = {
         ("103040", "Kotak Mahindra",        "Kotak Contra Fund - Regular - Growth"),
         ("154338", "Motilal Oswal",         "Motilal Oswal Contra Fund - Regular - Growth"),
         ("102414", "SBI",                   "SBI Contra Fund - Regular - Growth"),
+        ("154598", "Bandhan",               "Bandhan Contra Fund - Regular Plan - Growth"),
     ],
     "MEDIUM DURATION": [
         ("130037", "Nippon India",          "Nippon India Medium Duration Fund - Growth"),
