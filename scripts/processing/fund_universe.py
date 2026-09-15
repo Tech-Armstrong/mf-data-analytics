@@ -698,6 +698,15 @@ FUND_UNIVERSE: dict[str, list[tuple[str, str, str]]] = {
         ("103034", "SBI",                   "SBI MNC Fund - Regular Plan - Growth"),
         ("100740", "UTI",                   "UTI - MNC Fund - Regular Plan - Growth"),
     ],
+    "THEMATIC INTERNATIONAL EQUITY": [
+        # Directly-invested overseas/country-specific equity funds -- distinct
+        # from FOF OVERSEAS (fund-of-funds wrapping a foreign fund/ETF), these
+        # hold foreign equities directly.
+        ("106873", "Aditya Birla Sun Life", "Aditya Birla Sun Life International Equity Fund - Regular Plan - Growth"),
+        ("130863", "Nippon India",          "Nippon India Japan Equity Fund - Regular Plan - Growth"),
+        ("149328", "Nippon India",          "Nippon India Taiwan Equity Fund - Regular Plan - Growth"),
+        ("134922", "Nippon India",          "Nippon India US Equity Opportunities Fund - Regular Plan - Growth"),
+    ],
     "MULTI ASSET ALLOCATION": [
         ("153772", "360 ONE",              "360 ONE Multi Asset Allocation Fund - Regular - Growth"),
         ("151309", "Aditya Birla Sun Life", "ABSL Multi Asset Allocation Fund - Regular - Growth"),
