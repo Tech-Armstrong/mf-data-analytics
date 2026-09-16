@@ -436,7 +436,7 @@ FUND_UNIVERSE: dict[str, list[tuple[str, str, str]]] = {
         ("153356", "WhiteOak Capital",      "WhiteOak Capital Equity Savings Fund - Regular Growth"),
     ],
     "AGGRESSIVE HYBRID": [
-        ("103155", "Aditya Birla Sun Life", "Aditya Birla Sun Life Equity Hybrid '95 Fund - Regular - Growth"),
+        ("103155", "Aditya Birla Sun Life", "Aditya Birla Sun Life Aggressive Hybrid Fund - Regular Plan - Growth"),
         ("144393", "Axis",                  "Axis Aggressive Hybrid Fund - Regular - Growth"),
         ("140381", "Bandhan",               "Bandhan Aggressive Hybrid Fund - Regular - Growth"),
         ("139529", "Bank of India",         "BOI Mid & Small Cap Equity & Debt Fund - Regular - Growth"),
