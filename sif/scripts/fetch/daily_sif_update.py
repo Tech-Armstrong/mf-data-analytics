@@ -108,12 +108,27 @@ def _read_year_partition(year: int) -> pl.DataFrame | None:
 
 # ── Already loaded check ──────────────────────────────────────────────────────
 
-def already_loaded(nav_date: date) -> bool:
-    """Returns True if this date already exists in the year's Blob partition."""
-    part = _read_year_partition(nav_date.year)
-    if part is None or part.is_empty():
-        return False
-    return part.filter(pl.col("nav_date") == nav_date).height > 0
+def select_new_rows(df: pl.DataFrame) -> pl.DataFrame:
+    """
+    Return only the (scheme_code, nav_date) rows not already on Blob.
+
+    Replaces an earlier `already_loaded(nav_date)` guard that collapsed the feed
+    to df["nav_date"].max() and returned early if that date was present. The AMFI
+    feed is not single-dated -- late-striking schemes carry a later stamp than the
+    main business day -- so once that later date was stored the guard discarded the
+    whole file, including rows for an earlier day never written. See the same fix
+    in scripts/fetch/daily_nav_update.py, where it cost 55 schemes on 2026-09-18.
+    """
+    parts = [
+        part
+        for year in df["nav_date"].dt.year().unique().to_list()
+        if (part := _read_year_partition(year)) is not None and not part.is_empty()
+    ]
+    if not parts:
+        return df
+
+    existing = pl.concat(parts, how="vertical_relaxed").select("scheme_code", "nav_date")
+    return df.join(existing, on=["scheme_code", "nav_date"], how="anti")
 
 
 # ── Upload today's rows as a raw parquet ──────────────────────────────────────
@@ -174,15 +189,21 @@ def main(force: bool = False) -> None:
         log.warning("No SIF data parsed. AMFI may not have published yet.")
         return
 
-    nav_date = df["nav_date"].max()
-    found    = df["scheme_code"].n_unique()
-    log.info("Parsed: %d rows | latest NAV date: %s | %d schemes",
-             len(df), nav_date, found)
+    log.info("Parsed: %d rows | %d schemes", len(df), df["scheme_code"].n_unique())
+    for row in df.group_by("nav_date").len().sort("nav_date").iter_rows():
+        log.info("  feed date %s: %d scheme(s)", row[0], row[1])
 
-    # Idempotence: skip if this NAV date is already on Blob.
-    if not force and already_loaded(nav_date):
-        log.info("NAV date %s already on Blob. Nothing to do. Use --force to reload.", nav_date)
-        return
+    # Idempotence per (scheme_code, nav_date), not per feed date -- so a scheme
+    # that reported late is merged by a later run instead of being dropped.
+    if not force:
+        new_df = select_new_rows(df)
+        if new_df.is_empty():
+            log.info("All %d parsed row(s) already on Blob. Nothing to do. "
+                     "Use --force to reload.", len(df))
+            return
+        log.info("New rows to write: %d of %d parsed (%d already on Blob)",
+                 len(new_df), len(df), len(df) - len(new_df))
+        df = new_df
 
     # Upload today's rows as a raw parquet (audit trail)
     write_raw(df)

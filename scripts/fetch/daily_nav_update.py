@@ -158,12 +158,34 @@ def _read_year_partition(year: int) -> pl.DataFrame | None:
 
 # ── Already loaded check ──────────────────────────────────────────────────────
 
-def already_loaded(nav_date: date) -> bool:
-    """Returns True if this date already exists in the year's Blob partition."""
-    part = _read_year_partition(nav_date.year)
-    if part is None or part.is_empty():
-        return False
-    return part.filter(pl.col("nav_date") == nav_date).height > 0
+def select_new_rows(df: pl.DataFrame) -> pl.DataFrame:
+    """
+    Return only the (scheme_code, nav_date) rows not already on Blob.
+
+    Replaces an earlier `already_loaded(feed_date)` guard that reduced the whole
+    feed to a single date via df["nav_date"].max() and returned early if that one
+    date was present. NAVAll.txt is NOT single-dated: late-striking schemes (FOFs,
+    multi-asset, international) carry a later stamp than the main business day, so
+    max() was set by a handful of stragglers. Once that later date was on Blob the
+    guard discarded the entire file -- including rows for an earlier day we had
+    never stored. That is how 55 schemes for 2026-09-18 were lost while the job
+    still logged success and exited 0.
+
+    Deduping per (scheme_code, nav_date) instead means any date present in the feed
+    but missing on Blob is picked up, so a fund that reports late is merged by a
+    later run rather than orphaned. update_nav_history() already dedupes on this
+    same key, so this only decides whether there is anything worth writing.
+    """
+    parts = [
+        part
+        for year in df["nav_date"].dt.year().unique().to_list()
+        if (part := _read_year_partition(year)) is not None and not part.is_empty()
+    ]
+    if not parts:
+        return df
+
+    existing = pl.concat(parts, how="vertical_relaxed").select("scheme_code", "nav_date")
+    return df.join(existing, on=["scheme_code", "nav_date"], how="anti")
 
 
 # ── Upload today's rows as a raw parquet ──────────────────────────────────────
@@ -236,24 +258,45 @@ def main(force: bool = False) -> None:
         )
         return
 
-    # The file's own latest date, which is what we are about to load.
-    feed_date = df["nav_date"].max()
-    if not force and already_loaded(feed_date):
-        log.info("NAV for %s already on Blob. Nothing to do. Use --force to reload.",
-                 feed_date)
-        return
+    # The feed carries several dates at once (see select_new_rows). Report the
+    # spread rather than collapsing it to one date, so a partial day is visible.
+    log.info("Parsed: %d rows | Universe matched: %d/%d schemes",
+             len(df), df["scheme_code"].n_unique(), len(UNIVERSE_CODES))
+    for row in df.group_by("nav_date").len().sort("nav_date").iter_rows():
+        log.info("  feed date %s: %d scheme(s)", row[0], row[1])
 
-    nav_date   = feed_date
-    found      = df["scheme_code"].n_unique()
-    missing    = len(UNIVERSE_CODES) - found
-
-    log.info("Parsed: %d rows | NAV date: %s | Universe matched: %d/%d schemes",
-             len(df), nav_date, found, len(UNIVERSE_CODES))
-
+    missing = len(UNIVERSE_CODES) - df["scheme_code"].n_unique()
     if missing > 0:
-        present = set(df["scheme_code"].to_list())
-        absent  = sorted(UNIVERSE_CODES - present)
+        absent = sorted(UNIVERSE_CODES - set(df["scheme_code"].to_list()))
         log.warning("%d scheme(s) not in today's feed: %s", missing, absent)
+
+    # Keep only rows Blob does not already have, instead of skipping the whole
+    # file when one date is present. --force bypasses the filter and rewrites.
+    if force:
+        new_df = df
+    else:
+        new_df = select_new_rows(df)
+        if new_df.is_empty():
+            log.info("All %d parsed row(s) already on Blob. Nothing to do. "
+                     "Use --force to reload.", len(df))
+            return
+        log.info("New rows to write: %d of %d parsed (%d already on Blob)",
+                 len(new_df), len(df), len(df) - len(new_df))
+        for row in new_df.group_by("nav_date").len().sort("nav_date").iter_rows():
+            log.info("  writing %s: %d scheme(s)", row[0], row[1])
+
+    df = new_df
+
+    # A business day arriving with far fewer schemes than the universe usually
+    # means AMFI had not finished publishing when the job fired. Flag it: the
+    # stragglers are picked up by a later run now, but a persistent shortfall
+    # means the schedule is firing too early.
+    latest = df["nav_date"].max()
+    on_latest = df.filter(pl.col("nav_date") == latest).height
+    if on_latest < len(UNIVERSE_CODES) * 0.9:
+        log.warning("Partial day: only %d/%d schemes for %s. AMFI may still have "
+                    "been publishing; a later run will pick up the rest.",
+                    on_latest, len(UNIVERSE_CODES), latest)
 
     # Upload today's rows as a raw parquet (audit trail)
     write_raw(df)
