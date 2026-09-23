@@ -1,0 +1,55 @@
+name: Whitelist Monitor
+
+on:
+  schedule:
+    # 00:15 IST = 18:45 UTC, Mon–Fri — 45 min after daily_nav_update.yml's
+    # 18:00 UTC run, so scheme_master + the day's NAVs are already on Blob
+    # by the time this queries them. Same reasoning as daily_nav_update.yml's
+    # cron comment: run too early and you're reading yesterday's data.
+    - cron: "45 18 * * 1-5"
+
+  workflow_dispatch:          # allow manual trigger from GitHub UI
+
+jobs:
+  whitelist-monitor:
+    runs-on: ubuntu-latest
+    # No contents:write needed — reads Blob, writes nothing back to git.
+
+    env:
+      AZURE_STORAGE_CONNECTION_STRING: ${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}
+      BREVO_MCP_TOKEN: ${{ secrets.BREVO_MCP_TOKEN }}
+      BREVO_SENDER_EMAIL: ${{ secrets.BREVO_SENDER_EMAIL }}
+
+    steps:
+      # ── Checkout ──────────────────────────────────────────────────────────
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      # ── Python ────────────────────────────────────────────────────────────
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install -r whitelist_monitor/requirements.txt
+
+      # ── Validate whitelist.txt before running for real ─────────────────────
+      # Fails the job loudly if a name has drifted out of sync with
+      # scheme_master, instead of silently skipping that fund forever.
+      - name: Validate whitelist names
+        run: python -m whitelist_monitor.anomaly_email --check
+
+      # ── Detect anomalies + send the email report ────────────────────────────
+      # Reads nav_history/scheme_master live from Blob (no local data files).
+      # If BREVO_MCP_TOKEN/BREVO_SENDER_EMAIL secrets aren't set yet, this
+      # still runs the detection and writes anomaly_report.html as a job
+      # artifact-worthy file — it just skips sending and says so (see
+      # whitelist_monitor/README.md).
+      - name: Run whitelist monitor
+        run: python -m whitelist_monitor.anomaly_email

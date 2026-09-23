@@ -1,0 +1,22 @@
+# One fund NAME per line. Names must match scheme_master.scheme_name EXACTLY
+# (whitespace at the ends is trimmed). Validate before running for real:
+#   python -m whitelist_monitor.anomaly_email --check
+# '#' lines and blank lines are ignored.
+#
+# Migrated from armstrong dashboard/whitelist.txt (mfapi-sourced names) to
+# this repo's Blob/scheme_master naming (FUND_UNIVERSE-driven). The two
+# sources format names differently (e.g. "ABSL" vs "Aditya Birla Sun Life",
+# "GROWTH" vs "Growth") -- see the per-line notes below.
+
+ABSL MNC Fund - Regular Plan - Growth
+Taurus Flexi Cap Fund - Regular - Growth
+
+# --- Could not be resolved against this repo's scheme_master ---
+# The dashboard's whitelist also carried two debt-category funds that are
+# NOT in this repo's FUND_UNIVERSE (which is equity/hybrid/thematic only --
+# no Gilt / debt duration categories exist here at all). If these need
+# monitoring, FUND_UNIVERSE must gain a debt category and these funds must
+# be added + backfilled first (see scripts/processing/fund_universe.py).
+#
+# Aditya Birla Sun Life Gilt Fund - Regular Plan - GROWTH
+# Aditya Birla Sun Life Medium to Long Term Fund - Regular Plan - GROWTH

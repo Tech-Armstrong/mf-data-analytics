@@ -40,3 +40,4 @@ data/
 
 # Generated reports (coverage etc.)
 reports/
+whitelist_monitor/anomaly_report.html

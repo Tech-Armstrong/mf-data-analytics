@@ -1,0 +1,17 @@
+{
+  "_comment": "Anomaly = fund's trailing return is below its category peer average by MORE than the threshold (in percentage points) for that horizon. Edit thresholds and recipients as needed.",
+  "thresholds_pp": {
+    "m6": 2.0,
+    "y1": 3.0,
+    "y3": 4.0,
+    "y5": 5.0
+  },
+  "email": {
+    "recipients": [
+      "divyanshu@armstrong-cap.com"
+    ],
+    "subject_prefix": "Peer Bench",
+    "from_name": "Whitelist Monitor Alert",
+    "send_when_no_anomalies": true
+  }
+}

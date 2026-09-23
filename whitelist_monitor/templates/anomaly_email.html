@@ -1,0 +1,63 @@
+{#
+  Whitelist anomaly email — HTML body.
+  Rendered by anomaly_email.py (render_email). Edit freely; no Python
+  change needed. Autoescape is ON, so {{ values }} are HTML-safe.
+
+  Context:
+    generated_at   str
+    has_anomalies  bool
+    anomaly_count  int
+    horizons       [{key, label, thr_label}]           # column order
+    anomalies      [{name, category, latest_date, breaches, commentary,
+                     cells: [{key, label, thr_label, fund, peer, diff,
+                              has_diff, breach}]}]      # cells in column order
+    unmatched      [{name, suggestion}]
+  Numbers in fund/peer/diff are pre-formatted strings ("+1.20%", "-4.33pp", "—").
+  `commentary` is a pre-built one-line summary (worst breaching horizon).
+#}
+<div style="max-width:760px;margin:0 auto;font-family:Arial,Helvetica,sans-serif">
+<h2 style="color:#2c3e50;margin-bottom:4px">Whitelist anomaly report</h2>
+
+{% if has_anomalies %}
+<p style="color:#c0392b;font-size:16px;margin-top:0"><b>Fund(s) Detected</b></p>
+<table style="border-collapse:collapse;font-size:13px;width:100%">
+  <thead>
+    <tr>
+      <th style="text-align:left;padding:6px 10px;border-bottom:2px solid #ddd">Fund</th>
+      {% for h in horizons %}
+      <th style="text-align:right;padding:6px 10px;border-bottom:2px solid #ddd">{{ h.label }}</th>
+      {% endfor %}
+      <th style="text-align:left;padding:6px 10px;border-bottom:2px solid #ddd">Commentary</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for r in anomalies %}
+    <tr>
+      <td style="padding:6px 10px;border-bottom:1px solid #eee"><b>{{ r.name }}</b><br><span style="color:#888;font-size:11px">{{ r.category }}</span></td>
+      {% for c in r.cells %}
+      {% if not c.has_diff %}
+      <td style="text-align:right;color:#999;padding:6px 10px;border-bottom:1px solid #eee">&mdash;</td>
+      {% else %}
+      <td style="text-align:right;padding:6px 10px;border-bottom:1px solid #eee;color:{{ '#c0392b' if c.breach else '#2c3e50' }};font-weight:{{ '700' if c.breach else '400' }}">
+        {{ c.fund }}
+      </td>
+      {% endif %}
+      {% endfor %}
+      <td style="padding:6px 10px;border-bottom:1px solid #eee;color:#555;font-size:12px">{{ r.commentary }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p style="color:#27ae60;font-size:14px"><b>No anomalies today.</b> All whitelisted funds are within threshold on every horizon.</p>
+{% endif %}
+
+{% if unmatched %}
+<p style="color:#c0392b;font-size:13px">{{ unmatched | length }} whitelist name(s) not found in scheme_master. Fix in whitelist.txt — the name must match scheme_master.scheme_name exactly (query it via config.duckdb_session.get_connection()):</p>
+<ul style="font-size:13px;color:#c0392b">
+  {% for u in unmatched %}
+  <li><b>{{ u.name }}</b>{% if u.suggestion %}<br><span style="color:#888">did you mean: </span><code>{{ u.suggestion }}</code>{% endif %}</li>
+  {% endfor %}
+</ul>
+{% endif %}
+</div>

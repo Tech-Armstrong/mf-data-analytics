@@ -1,0 +1,30 @@
+{#- Whitelist anomaly email — plain-text body. Same context as anomaly_email.html.
+    Whitespace matters here: the {%- -%} markers keep the layout tidy. -#}
+WHITELIST ANOMALY REPORT
+
+{% if has_anomalies %}
+FUND(S) DETECTED
+
+{% for r in anomalies %}
+* {{ r.name }}  ({{ r.category }})
+{% for c in r.cells %}
+{% if c.has_diff %}
+    {{ "%-4s" | format(c.label) }}: fund {{ c.fund }}{% if c.breach %}   <-- BREACH{% endif +%}
+{% endif %}
+{% endfor %}
+    {{ r.commentary }}
+
+{% endfor %}
+{% else %}
+No anomalies: every whitelisted fund is within threshold on every horizon.
+
+{% endif %}
+{% if unmatched %}
+{{ unmatched | length }} whitelist name(s) NOT found in scheme_master - fix in whitelist.txt
+(name must match scheme_master.scheme_name exactly):
+{% for u in unmatched %}
+  - {{ u.name }}
+{% if u.suggestion %}      did you mean:  {{ u.suggestion }}
+{% endif %}
+{% endfor %}
+{% endif %}
