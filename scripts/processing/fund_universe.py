@@ -376,6 +376,7 @@ FUND_UNIVERSE: dict[str, list[tuple[str, str, str]]] = {
         ("106317", "Invesco",               "Invesco India Balanced Advantage Fund - Regular Plan - Growth"),
         ("147787", "ITI",                   "ITI Balanced Advantage Fund - Regular Plan - Growth Option"),
         ("144333", "Kotak Mahindra",        "Kotak Balanced Advantage Fund - Regular Plan - Growth Option"),
+        ("154702", "Jio BlackRock",         "JioBlackRock Balanced Advantage Fund - Regular Plan - Growth Option"),
         ("149259", "LIC",                   "LIC MF Balanced Advantage Fund - Regular - Growth"),
         ("149404", "Mahindra Manulife",     "Mahindra Manulife Balanced Advantage Fund - Regular - Growth"),
         ("150473", "Mirae Asset",           "Mirae Asset Balanced Advantage Fund - Regular - Growth"),
@@ -638,6 +639,7 @@ FUND_UNIVERSE: dict[str, list[tuple[str, str, str]]] = {
         ("152830", "HSBC",                  "HSBC India Export Opportunities Fund - Regular Plan - Growth"),
         ("103312", "ICICI Prudential",      "ICICI Prudential Exports & Services Fund - Regular Plan - Growth"),
         ("103145", "SBI",                   "SBI Comma Fund - Regular Plan - Growth"),
+        ("154637", "Jio BlackRock",         "JioBlackRock Sector Rotation Fund - Regular Plan - Growth Option"),
     ],
     "MONEY MARKET": [
         ("108756", "Bandhan",               "Bandhan Money Market Fund - Regular - Growth"),
@@ -748,6 +750,7 @@ FUND_UNIVERSE: dict[str, list[tuple[str, str, str]]] = {
     "THEMATIC QUALITY": [
         ("154175", "SBI",                   "SBI Quality Fund - Regular Plan - Growth"),
         ("153190", "WhiteOak Capital",      "WhiteOak Capital Quality Equity Fund - Regular Plan - Growth"),
+        ("154667", "Motilal Oswal",         "Motilal Oswal Quality Fund - Regular Plan - Growth"),
     ],
     "THEMATIC COMMODITIES": [
         ("147661", "ICICI Prudential",      "ICICI Prudential Commodities Fund - Regular Plan - Growth"),
@@ -902,6 +905,7 @@ FUND_UNIVERSE: dict[str, list[tuple[str, str, str]]] = {
         ("154338", "Motilal Oswal",         "Motilal Oswal Contra Fund - Regular - Growth"),
         ("102414", "SBI",                   "SBI Contra Fund - Regular - Growth"),
         ("154598", "Bandhan",               "Bandhan Contra Fund - Regular Plan - Growth"),
+        ("154741", "ICICI Prudential",      "ICICI Prudential Contra Fund - Regular Plan - Growth"),
     ],
     "MEDIUM DURATION": [
         ("130037", "Nippon India",          "Nippon India Medium Duration Fund - Growth"),
