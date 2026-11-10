@@ -253,6 +253,12 @@ FUND_UNIVERSE: dict[str, list[tuple[str, str, str]]] = {
         ("100664", "UTI",                   "UTI Large & Mid Cap Fund - Regular - Growth"),
         ("152225", "WhiteOak Capital",      "Whiteoak Capital Large & Mid Cap Fund Regular Growth"),
     ],
+    "LIFE CYCLE FUND": [
+        ("154563", "ICICI Prudential",      "ICICI Prudential Life Cycle Fund 2031 - Regular Plan - Growth"),
+        ("154577", "ICICI Prudential",      "ICICI Prudential Life Cycle Fund 2036 - Regular Plan - Growth"),
+        ("154579", "ICICI Prudential",      "ICICI Prudential Life Cycle Fund 2041 - Regular Plan - Growth"),
+        ("154777", "Mirae Asset",           "Mirae Asset Life Cycle Fund 2056 - Regular Plan - Growth"),
+    ],
     "VALUE": [
         ("108167", "Aditya Birla Sun Life", "ABSL Value Fund - Growth"),
         ("149167", "Axis",                  "Axis Value Fund - Regular - Growth"),
